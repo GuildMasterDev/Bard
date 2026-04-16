@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A curated directory of resources for speakers, performers, and storytellers.">
+    <meta name="theme-color" content="#dc2626">
+    <title>Bard — Resources for Speakers, Performers &amp; Storytellers</title>
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --bg-1: #0a0a0f;
+            --bg-2: #14142b;
+            --bg-3: #1a1a2e;
+            --accent: #dc2626;
+            --accent-2: #ff6b6b;
+            --accent-3: #f59e0b;
+            --text: #f3f4f6;
+            --muted: #94a3b8;
+            --glass: rgba(255, 255, 255, 0.06);
+            --glass-strong: rgba(255, 255, 255, 0.1);
+            --border: rgba(220, 38, 38, 0.25);
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            background:
+                radial-gradient(1200px 800px at 10% -10%, rgba(220, 38, 38, 0.18), transparent 60%),
+                radial-gradient(1000px 700px at 110% 10%, rgba(245, 158, 11, 0.12), transparent 55%),
+                linear-gradient(135deg, var(--bg-1) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
+            background-attachment: fixed;
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        header {
+            text-align: center;
+            padding: 56px 24px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            margin-bottom: 32px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: -50%;
+            background: conic-gradient(from 180deg at 50% 50%, transparent 0deg, rgba(220, 38, 38, 0.15) 90deg, transparent 180deg, rgba(245, 158, 11, 0.12) 270deg, transparent 360deg);
+            animation: spin 22s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        header > * { position: relative; z-index: 1; }
+
+        header h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, #ffffff 0%, #ffd6d6 50%, #fde68a 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .tagline {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            font-weight: 300;
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .search-wrap {
+            margin: 0 auto 32px;
+            max-width: 720px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 16px 20px 16px 52px;
+            font-size: 1rem;
+            color: var(--text);
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+            outline: none;
+        }
+
+        .search-input::placeholder { color: var(--muted); }
+
+        .search-input:focus {
+            border-color: var(--accent);
+            background: var(--glass-strong);
+            box-shadow: 0 0 0 4px rgba(220, 38, 38, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 18px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 20px;
+            height: 20px;
+            color: var(--muted);
+            pointer-events: none;
+        }
+
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 32px;
+            padding: 20px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .category-btn {
+            padding: 10px 22px;
+            background: rgba(220, 38, 38, 0.08);
+            border: 1.5px solid var(--accent);
+            color: var(--text);
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            font-family: inherit;
+            transition: transform 0.25s ease, background 0.25s ease, box-shadow 0.25s ease, color 0.25s ease;
+        }
+
+        .category-btn:hover {
+            background: rgba(220, 38, 38, 0.18);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(220, 38, 38, 0.25);
+        }
+
+        .category-btn.active {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            border-color: transparent;
+            font-weight: 600;
+            box-shadow: 0 8px 24px rgba(220, 38, 38, 0.35);
+        }
+
+        .results-meta {
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+            min-height: 1.2em;
+        }
+
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 22px;
+            margin-bottom: 48px;
+        }
+
+        .resource-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 26px;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.5s ease backwards;
+            transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease;
+        }
+
+        .resource-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(220, 38, 38, 0) 0%, rgba(220, 38, 38, 0.08) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 40px rgba(220, 38, 38, 0.25);
+            background: var(--glass-strong);
+            border-color: rgba(220, 38, 38, 0.45);
+        }
+
+        .resource-card:hover::after { opacity: 1; }
+
+        .resource-card .category-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-3);
+            font-weight: 600;
+        }
+
+        .resource-card h3 {
+            color: var(--text);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .resource-card p {
+            color: var(--muted);
+            line-height: 1.55;
+            flex-grow: 1;
+        }
+
+        .resource-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            align-self: flex-start;
+            padding: 10px 18px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: #fff;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+
+        .resource-link:hover {
+            transform: scale(1.04);
+            filter: brightness(1.08);
+            box-shadow: 0 10px 24px rgba(220, 38, 38, 0.4);
+        }
+
+        .resource-card.hidden { display: none; }
+
+        .empty-state {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding: 64px 24px;
+            color: var(--muted);
+            font-size: 1.05rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 28px;
+            margin-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+
+        footer a {
+            color: var(--accent-2);
+            text-decoration: none;
+        }
+
+        footer a:hover { text-decoration: underline; }
+
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: var(--bg-1); }
+        ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-2); }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            header { padding: 40px 20px; }
+            .resources-grid { grid-template-columns: 1fr; gap: 16px; }
+            .category-btn { padding: 9px 16px; font-size: 0.85rem; }
+            .category-nav { padding: 14px; gap: 8px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            header::before { animation: none; }
+        }
+    </style>
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png">
+    <link rel="apple-touch-icon" href="icons/icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎭 Bard</h1>
+            <p class="tagline">Your companion for speaking, performing, and storytelling excellence.</p>
+        </header>
+
+        <div class="search-wrap">
+            <svg class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-4.35-4.35M17 11a6 6 0 11-12 0 6 6 0 0112 0z"/>
+            </svg>
+            <input
+                id="search"
+                class="search-input"
+                type="search"
+                placeholder="Search resources by name, description, or category…"
+                autocomplete="off"
+                aria-label="Search resources">
+        </div>
+
+        <nav class="category-nav" aria-label="Resource categories">
+            <button class="category-btn active" data-category="all" type="button">All Resources</button>
+            <button class="category-btn" data-category="speaking" type="button">Public Speaking</button>
+            <button class="category-btn" data-category="performing" type="button">Performance Arts</button>
+            <button class="category-btn" data-category="storytelling" type="button">Storytelling</button>
+            <button class="category-btn" data-category="tools" type="button">Tools &amp; Apps</button>
+            <button class="category-btn" data-category="learning" type="button">Learning</button>
+        </nav>
+
+        <p id="results-meta" class="results-meta" role="status" aria-live="polite"></p>
+
+        <main id="grid" class="resources-grid"></main>
+
+        <footer>
+            <p>Bard — Empowering voices, inspiring performances. Built by <a href="https://github.com/GuildMasterDev" rel="noopener noreferrer" target="_blank">GuildMaster Development</a>.</p>
+        </footer>
+    </div>
+
+    <script>
+        const CATEGORY_LABELS = {
+            speaking: 'Public Speaking',
+            performing: 'Performance Arts',
+            storytelling: 'Storytelling',
+            tools: 'Tools & Apps',
+            learning: 'Learning'
+        };
+
+        const RESOURCES = [
+            { name: 'TED Talks', description: "Watch and learn from the world's best speakers across every discipline.", url: 'https://www.ted.com/talks', categories: ['speaking'] },
+            { name: 'Toastmasters International', description: 'Build confidence and public speaking skills through local club practice.', url: 'https://www.toastmasters.org', categories: ['speaking'] },
+            { name: 'Orai', description: 'AI-powered public speaking coach that analyzes pace, filler words, and energy.', url: 'https://www.oraiapp.com', categories: ['speaking', 'tools'] },
+            { name: 'VirtualSpeech', description: 'VR training simulator for presentations, interviews, and networking.', url: 'https://virtualspeech.com', categories: ['speaking', 'learning'] },
+            { name: 'Speech Shadowing', description: 'Improve fluency, rhythm, and pronunciation through imitation drills.', url: 'https://www.fluentu.com/blog/educator/speech-shadowing/', categories: ['speaking', 'learning'] },
+
+            { name: 'MasterClass', description: 'Learn craft from world-renowned performers, directors, and creators.', url: 'https://www.masterclass.com/categories/music-entertainment', categories: ['performing', 'learning'] },
+            { name: 'The Actors Studio', description: 'Legendary home of method acting, workshops, and professional development.', url: 'https://theactorsstudio.org', categories: ['performing'] },
+            { name: 'Stage 32', description: 'Global network for film, TV, and theatre performers and creatives.', url: 'https://www.stage32.com', categories: ['performing'] },
+            { name: 'Backstage', description: 'Casting calls, auditions, and performance opportunities across the industry.', url: 'https://www.backstage.com', categories: ['performing', 'tools'] },
+
+            { name: 'The Moth', description: 'True stories told live — workshops, podcasts, and StorySLAM events.', url: 'https://themoth.org', categories: ['storytelling'] },
+            { name: 'StoryCorps', description: 'Preserve and share humanity\u2019s stories through recorded interviews.', url: 'https://storycorps.org', categories: ['storytelling'] },
+            { name: 'Pixar in a Box: The Art of Storytelling', description: 'Free course from Pixar and Khan Academy on narrative craft.', url: 'https://www.khanacademy.org/computing/pixar/storytelling', categories: ['storytelling', 'learning'] },
+            { name: 'Twine', description: 'Open-source tool for telling interactive, nonlinear stories in your browser.', url: 'https://twinery.org', categories: ['storytelling', 'tools'] },
+
+            { name: 'Teleprompter Premium', description: 'Professional teleprompter app for scripts, speeches, and video shoots.', url: 'https://www.bombingbrain.com/teleprompter/', categories: ['tools'] },
+            { name: 'Beautiful.ai', description: 'AI-powered slide design — presentations that compose themselves.', url: 'https://www.beautiful.ai', categories: ['tools'] },
+            { name: 'Descript', description: 'Edit audio and video like a document. Overdub, filler word removal, and more.', url: 'https://www.descript.com', categories: ['tools'] },
+            { name: 'Canva', description: 'Design beautiful slides, posters, and promo assets for every performance.', url: 'https://www.canva.com', categories: ['tools'] },
+            { name: 'OBS Studio', description: 'Free, open-source software for live streaming and recording performances.', url: 'https://obsproject.com', categories: ['tools'] },
+
+            { name: 'Coursera — Communication Skills', description: 'Professional communication courses from top universities worldwide.', url: 'https://www.coursera.org/courses?query=communication%20skills', categories: ['learning'] },
+            { name: 'Skillshare — Creative Writing', description: 'Short-form classes on storytelling, scripting, and narrative craft.', url: 'https://www.skillshare.com/browse/creative-writing', categories: ['learning', 'storytelling'] },
+            { name: 'Khan Academy', description: 'Free, world-class lessons covering writing, humanities, and the arts.', url: 'https://www.khanacademy.org', categories: ['learning'] },
+            { name: 'edX — Public Speaking', description: 'University-grade online courses on rhetoric and public speaking.', url: 'https://www.edx.org/search?q=public+speaking', categories: ['learning', 'speaking'] }
+        ];
+
+        const grid = document.getElementById('grid');
+        const search = document.getElementById('search');
+        const meta = document.getElementById('results-meta');
+        const buttons = document.querySelectorAll('.category-btn');
+
+        let activeCategory = 'all';
+        let query = '';
+
+        function escapeHtml(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
+        function render() {
+            const q = query.trim().toLowerCase();
+            const filtered = RESOURCES.filter((r) => {
+                const inCategory = activeCategory === 'all' || r.categories.includes(activeCategory);
+                if (!inCategory) return false;
+                if (!q) return true;
+                const haystack = (r.name + ' ' + r.description + ' ' + r.categories.map((c) => CATEGORY_LABELS[c] || c).join(' ')).toLowerCase();
+                return haystack.includes(q);
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div class="empty-state">No resources match your search. Try a different term or category.</div>';
+                meta.textContent = 'No results.';
+                return;
+            }
+
+            grid.innerHTML = filtered.map((r, i) => {
+                const primaryCat = r.categories[0];
+                const tag = CATEGORY_LABELS[primaryCat] || primaryCat;
+                return (
+                    '<article class="resource-card" style="animation-delay: ' + (i * 0.04).toFixed(2) + 's">' +
+                        '<span class="category-tag">' + escapeHtml(tag) + '</span>' +
+                        '<h3>' + escapeHtml(r.name) + '</h3>' +
+                        '<p>' + escapeHtml(r.description) + '</p>' +
+                        '<a class="resource-link" href="' + escapeHtml(r.url) + '" target="_blank" rel="noopener noreferrer">Visit &rarr;</a>' +
+                    '</article>'
+                );
+            }).join('');
+
+            const total = RESOURCES.length;
+            const shown = filtered.length;
+            meta.textContent = shown === total
+                ? 'Showing all ' + total + ' resources.'
+                : 'Showing ' + shown + ' of ' + total + ' resources.';
+        }
+
+        buttons.forEach((btn) => {
+            btn.addEventListener('click', () => {
+                buttons.forEach((b) => b.classList.remove('active'));
+                btn.classList.add('active');
+                activeCategory = btn.dataset.category;
+                render();
+            });
+        });
+
+        let searchTimer;
+        search.addEventListener('input', (e) => {
+            clearTimeout(searchTimer);
+            const value = e.target.value;
+            searchTimer = setTimeout(() => {
+                query = value;
+                render();
+            }, 80);
+        });
+
+        render();
+
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(() => { /* offline not critical */ });
+            });
+        }
+    </script>
+</body>
+</html>
