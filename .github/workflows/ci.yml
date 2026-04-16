@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint-and-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Syntax check all JS files
+        run: |
+          shopt -s globstar nullglob
+          files=(**/*.js)
+          # Strip node_modules and dist
+          filtered=()
+          for f in "${files[@]}"; do
+            case "$f" in
+              node_modules/*|dist/*) ;;
+              *) filtered+=("$f") ;;
+            esac
+          done
+          if [ ${#filtered[@]} -eq 0 ]; then
+            echo "No JS files to check."
+            exit 0
+          fi
+          echo "Checking ${#filtered[@]} file(s)..."
+          for f in "${filtered[@]}"; do
+            echo "  $f"
+            node --check "$f"
+          done
+        shell: bash
