@@ -1,127 +1,123 @@
 # Bard 🎭
 
-A beautiful Electron desktop application providing a curated directory of resources for speakers, performers, and storytellers. Built with modern web technologies and designed to inspire creative professionals.
+A curated resource directory for speakers, performers, and storytellers — shipped both as a cross-platform **Electron 41** desktop app and as an installable **PWA** web demo.
 
-## ✨ Features
-
-- **🎭 Organized Resource Categories** - Browse resources by category: Public Speaking, Performance Arts, Storytelling, Tools & Apps, and Learning
-- **🔗 Smart Link Handling** - All external links automatically open in your default browser
-- **🎨 Modern Dark Theme** - Eye-friendly dark interface with gradient effects and smooth animations
-- **📱 Responsive Design** - Adapts beautifully to different window sizes
-- **⚡ Instant Filtering** - Quick category filtering with animated transitions
-- **🖼️ Custom App Icons** - Professional branding with platform-specific icons
-
-## 📦 Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/guildmasterdev/Bard.git
-cd Bard
-
-# Install dependencies
-npm install
-
-# Start the application
-npm start
-```
-
-## 🚀 Usage
-
-### Running the App
-```bash
-npm start
-```
-
-### Development Mode
-```bash
-npm run dev
-```
-
-## 📚 Included Resources
-
-### Public Speaking
-- **TED Talks** - Watch and learn from world-class speakers
-- **Toastmasters International** - Build confidence and speaking skills
-- **Orai** - AI-powered public speaking coach
-- **VirtualSpeech** - VR training for presentations
-- **Speech Shadowing** - Improve through imitation techniques
-
-### Performance Arts
-- **MasterClass** - Learn from renowned performers
-- **The Actors Studio** - Professional acting techniques
-- **Stage 32** - Networking for creatives
-- **Backstage** - Casting calls and opportunities
-
-### Storytelling
-- **The Moth** - True stories told live
-- **StoryCorps** - Preserve humanity's stories
-- **Pixar in a Box** - Storytelling by Pixar Animation
-- **Twine** - Create interactive stories
-
-### Tools & Apps
-- **Teleprompter Premium** - Professional teleprompter software
-- **Beautiful.ai** - AI-powered presentations
-- **Descript** - Edit audio/video like documents
-
-### Learning Platforms
-- **Coursera** - Professional communication courses
-- **Skillshare** - Creative writing and storytelling
-- **Khan Academy** - Free educational resources
-
-## 🛠️ Technical Stack
-
-- **Electron** - Cross-platform desktop app framework
-- **HTML5/CSS3** - Modern web standards
-- **JavaScript** - Interactive functionality
-- **ImageMagick** - Asset generation
-
-## 📁 Project Structure
-
-```
-Bard/
-├── assets/           # Application icons and images
-│   ├── icon.png     # Default app icon
-│   ├── icon.icns    # macOS icon
-│   └── icon.ico     # Windows icon
-├── main.js          # Electron main process
-├── preload.js       # Preload script for security
-├── renderer.js      # Frontend JavaScript
-├── index.html       # Main application UI
-├── styles.css       # Application styling
-└── package.json     # Project configuration
-```
-
-## 🎨 Design Features
-
-- **Glassmorphism Effects** - Modern frosted glass UI elements
-- **Gradient Backgrounds** - Dynamic color transitions
-- **Smooth Animations** - Polished user interactions
-- **Custom Scrollbars** - Themed to match the design
-
-## 🖥️ Platform Support
-
-- ✅ macOS (10.14+)
-- ✅ Windows (10/11)
-- ✅ Linux (Ubuntu, Fedora, Debian)
-
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Add new resources
-- Improve the UI/UX
-- Fix bugs
-- Enhance documentation
-
-## 📄 License
-
-MIT License - feel free to use this project for personal or commercial purposes.
-
-## 🙏 Acknowledgments
-
-Built with ❤️ for the creative community of speakers, performers, and storytellers worldwide.
+**Live demo:** https://guildmasterdev.github.io/Bard
 
 ---
 
-**Version:** 1.0.0  
-**Author:** Guildmaster Dev  
-**Repository:** [github.com/guildmasterdev/Bard](https://github.com/guildmasterdev/Bard)
+## ✨ Features
+
+- **🎭 Five curated categories** — Public Speaking, Performance Arts, Storytelling, Tools & Apps, and Learning
+- **🔍 Live search** — instantly filter resources by name, description, or category
+- **⚡ Category filters** — smooth animated transitions between views
+- **🎨 Glassmorphism UI** — frosted-glass cards, conic gradient accents, theatrical red + amber palette
+- **🔗 Smart link handling** — desktop app opens links in the system browser; web demo opens in new tabs
+- **📱 Responsive** — tuned for mobile, tablet, and desktop
+- **🌐 Works offline** — PWA caches the entire demo on first load
+
+## 🚀 Try it
+
+### As a PWA (web)
+
+Visit **https://guildmasterdev.github.io/Bard** in any modern browser. On mobile, use your browser's *Add to Home Screen* option to install.
+
+### As a desktop app (Electron)
+
+```bash
+git clone https://github.com/GuildMasterDev/Bard.git
+cd Bard
+npm install
+npm start
+```
+
+### Building native installers
+
+```bash
+npm run build          # current platform
+npm run build:mac      # macOS (dmg, zip)
+npm run build:win      # Windows (nsis, portable)
+npm run build:linux    # Linux (AppImage, deb)
+```
+
+Output is written to `dist/`.
+
+## 📱 PWA support
+
+The web demo is a full Progressive Web App:
+
+- **`web/manifest.json`** — name, theme color (`#dc2626` theatrical red), dark background (`#0a0a0f`), and 192/512 icons (both `any` and `maskable`).
+- **`web/sw.js`** — versioned `bard-v1` cache, cache-first strategy, offline fallback.
+- **Installable** on Chrome, Edge, Safari (iOS 16.4+), and Android.
+
+Once installed, Bard runs standalone and works fully offline.
+
+## 📚 Included resources
+
+### Public Speaking
+TED Talks · Toastmasters International · Orai · VirtualSpeech · Speech Shadowing
+
+### Performance Arts
+MasterClass · The Actors Studio · Stage 32 · Backstage
+
+### Storytelling
+The Moth · StoryCorps · Pixar in a Box · Twine
+
+### Tools & Apps
+Teleprompter Premium · Beautiful.ai · Descript · Canva · OBS Studio
+
+### Learning
+Coursera · Skillshare · Khan Academy · edX
+
+## 🛠️ Technical stack
+
+- **Electron 41** with `sandbox: true`, `contextIsolation: true`, and IPC-gated `shell.openExternal` (URLs validated to `http(s)` before opening)
+- **electron-builder 26** for multi-platform packaging
+- **Vanilla JS** — no runtime framework, no build step, no bundler
+- **Single-file web demo** — all CSS, JS, and data inline in `web/index.html`
+- **Service Worker** for offline caching
+
+## 📁 Project structure
+
+```
+Bard/
+├── main.js                     # Electron main process
+├── preload.js                  # Preload bridge (ipcRenderer.invoke)
+├── renderer.js                 # Desktop renderer filtering logic
+├── index.html                  # Desktop UI
+├── styles.css                  # Desktop styles
+├── assets/                     # App icons
+├── web/                        # Self-contained web demo & PWA
+│   ├── index.html              # All markup, CSS, JS, and resource data
+│   ├── manifest.json           # PWA manifest
+│   ├── sw.js                   # Service worker
+│   └── icons/                  # PWA icons (192, 512, maskable)
+└── .github/workflows/
+    ├── deploy-web.yml          # Auto-deploy web/ to GitHub Pages
+    └── ci.yml                  # npm ci + node --check on all JS
+```
+
+## 🧪 CI
+
+Every push to `main` and every PR runs `npm ci` and `node --check` across all tracked JS files. Every push to `main` that touches `web/` (or the deploy workflow itself) re-publishes the PWA to GitHub Pages.
+
+## 🖥️ Platform support
+
+- macOS 10.14+
+- Windows 10/11
+- Linux (Ubuntu, Fedora, Debian)
+- Any modern browser (web demo)
+
+## 🤝 Contributing
+
+PRs welcome — add resources, polish the UI, or improve the tooling. Resource links must point to real, current URLs.
+
+## 📄 License
+
+MIT — see [LICENSE](LICENSE).
+
+---
+
+**Version:** 2.0.0
+**Author:** GuildMaster Development
+**Repository:** https://github.com/GuildMasterDev/Bard
